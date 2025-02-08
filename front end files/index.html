@@ -8,5 +8,26 @@
 <body>
     <h1>Welcome to the Task Manager</h1>
     <p>This is a simple serverless web app.</p>
+    <script>
+        
+        const apiUrl = "https://znp5gnzvq6.execute-api.us-east-2.amazonaws.com/dev/tasks";
+      
+        fetch(apiUrl)
+          .then(response => response.json())
+          .then(data => {
+            // 'data' contains the full response from API Gateway, where the 'body' is a JSON string
+            const tasks = JSON.parse(data.body);
+            // Create a list element to display tasks
+            const taskList = document.createElement('ul');
+            tasks.forEach(task => {
+              const listItem = document.createElement('li');
+              listItem.textContent = task.task;
+              taskList.appendChild(listItem);
+            });
+            document.body.appendChild(taskList);
+          })
+          .catch(error => console.error('Error fetching tasks:', error));
+      </script>
+      
 </body>
 </html>
